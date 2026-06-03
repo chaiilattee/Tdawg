@@ -1,306 +1,1379 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>About Me</title>
-  
-<!-- SATISFY FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
- <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
-  
-<style>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>tiro</title>
 
-/* CHANGE DESKTOP BACKGROUND HERE */
-:root{
-    --desktop-bg: url("https://xatimg.com/image/dapYtfz5t99n.gif");
-}
+        <link
+            href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"
+            rel="stylesheet"
+        />
 
-body{
-    margin:0;
-    padding:0;
-    background-image: var(--desktop-bg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    font-family: "Lucida Grande", Tahoma, sans-serif;
-}
+        <style>
+            :root {
+                --desktop-bg: url("https://xatimg.com/image/ZCr1HQEW6XkQ.gif");
+                --window-width: 780px;
+                --window-height: 500px;
+                --taskbar-height: 70px;
+                --radius: 20px;
+                --win-shadow: 0 20px 60px rgba(0, 0, 0, 0.38);
+                --glass: rgba(255, 255, 255, 0.18);
+                --glass-border: rgba(255, 255, 255, 0.24);
+                --titlebar: rgba(255, 255, 255, 0.18);
+                --titlebar-border: rgba(255, 255, 255, 0.2);
+                --panel: rgba(255, 255, 255, 0.12);
+                --text: #ffffff;
+                --muted: rgba(255, 255, 255, 0.72);
+                --accent: #62CD6A;
+                --accent2: #62CD6A;
+                --sidebar: rgba(18, 22, 34, 0.42);
+                --main: rgba(255, 255, 255, 0.1);
+                --blur: 18px;
+                --dock-bg: rgba(16, 18, 29, 0.42);
+                --dock-border: rgba(255, 255, 255, 0.14);
+            }
 
-/* Desktop */
+            * {
+                box-sizing: border-box;
+            }
 
-.desktop{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-}
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                overflow: hidden;
+            }
 
-/* Window */
+            body {
+                font-family: "Segoe UI", Tahoma, sans-serif;
+                color: var(--text);
+                background-image: var(--desktop-bg);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                position: relative;
+            }
 
-.window{
-    width:700px;
-    border-radius:10px;
-    background:#e8e8e8;
-    box-shadow:0 8px 20px rgba(0,0,0,0.4);
-    border:1px solid #888;
-    overflow:hidden;
-}
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background:
+                    radial-gradient(
+                        circle at 15% 20%,
+                        rgba(102, 203, 255, 0.2),
+                        transparent 25%
+                    ),
+                    radial-gradient(
+                        circle at 80% 15%,
+                        rgba(192, 135, 255, 0.18),
+                        transparent 22%
+                    ),
+                    radial-gradient(
+                        circle at 75% 85%,
+                        rgba(255, 120, 180, 0.14),
+                        transparent 24%
+                    ),
+                    linear-gradient(
+                        to bottom right,
+                        rgba(2, 8, 20, 0.42),
+                        rgba(15, 19, 35, 0.24)
+                    );
+                pointer-events: none;
+            }
 
-/* Title bar */
+            .particles {
+                position: fixed;
+                inset: 0;
+                overflow: hidden;
+                pointer-events: none;
+                z-index: 0;
+            }
 
-.titlebar{
-    height:28px;
-    background:linear-gradient(#e9f1fb,#b7c7db);
-    display:flex;
-    align-items:center;
-    padding:0 10px;
-    border-bottom:1px solid #8a9db5;
-    position:relative;
-}
+            .particle {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    rgba(255, 255, 255, 0.9),
+                    rgba(255, 255, 255, 0)
+                );
+                opacity: 0.35;
+                animation: floatUp linear infinite;
+                filter: blur(1px);
+            }
 
-/* glossy highlight */
+            .particle:nth-child(1) {
+                left: 8%;
+                bottom: -40px;
+                animation-duration: 16s;
+                animation-delay: 0s;
+                transform: scale(1.1);
+            }
+            .particle:nth-child(2) {
+                left: 18%;
+                bottom: -50px;
+                animation-duration: 19s;
+                animation-delay: 2s;
+                transform: scale(0.7);
+            }
+            .particle:nth-child(3) {
+                left: 30%;
+                bottom: -30px;
+                animation-duration: 14s;
+                animation-delay: 5s;
+                transform: scale(1.2);
+            }
+            .particle:nth-child(4) {
+                left: 42%;
+                bottom: -30px;
+                animation-duration: 20s;
+                animation-delay: 1s;
+                transform: scale(0.9);
+            }
+            .particle:nth-child(5) {
+                left: 54%;
+                bottom: -30px;
+                animation-duration: 18s;
+                animation-delay: 7s;
+                transform: scale(1);
+            }
+            .particle:nth-child(6) {
+                left: 63%;
+                bottom: -30px;
+                animation-duration: 15s;
+                animation-delay: 3s;
+                transform: scale(0.8);
+            }
+            .particle:nth-child(7) {
+                left: 74%;
+                bottom: -30px;
+                animation-duration: 21s;
+                animation-delay: 6s;
+                transform: scale(1.15);
+            }
+            .particle:nth-child(8) {
+                left: 85%;
+                bottom: -30px;
+                animation-duration: 17s;
+                animation-delay: 4s;
+                transform: scale(0.85);
+            }
+            .particle:nth-child(9) {
+                left: 92%;
+                bottom: -30px;
+                animation-duration: 23s;
+                animation-delay: 2s;
+                transform: scale(1.1);
+            }
 
-.titlebar::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:50%;
-    background:linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0));
-    pointer-events:none;
-}
+            @keyframes floatUp {
+                0% {
+                    transform: translateY(0) translateX(0) scale(1);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 0.35;
+                }
+                50% {
+                    transform: translateY(-45vh) translateX(25px) scale(1.25);
+                    opacity: 0.32;
+                }
+                100% {
+                    transform: translateY(-110vh) translateX(-18px) scale(0.7);
+                    opacity: 0;
+                }
+            }
 
-.buttons{
-    display:flex;
-    gap:6px;
-    margin-right:10px;
-}
+            .desktop {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+            }
 
-.btn{
-    width:12px;
-    height:12px;
-    border-radius:50%;
-}
+            .taskbar {
+                position: fixed;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 12px;
+                height: var(--taskbar-height);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px 16px;
+                border-radius: 22px;
+                background: var(--dock-bg);
+                border: 1px solid var(--dock-border);
+                backdrop-filter: blur(18px) saturate(140%);
+                -webkit-backdrop-filter: blur(18px) saturate(140%);
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+                z-index: 1000;
+            }
 
-.red{ background:#ff5f57; }
-.yellow{ background:#ffbd2e; }
-.green{ background:#28c840; }
+            .dock-items {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
 
-.title{
-    font-size:13px;
-    font-weight:bold;
-}
+            .dock-app {
+                width: 52px;
+                height: 52px;
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 22px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                cursor: pointer;
+                transition:
+                    transform 0.22s ease,
+                    background 0.22s ease,
+                    box-shadow 0.22s ease;
+                position: relative;
+            }
 
-/* Layout */
+            .dock-app:hover {
+                transform: translateY(-6px) scale(1.05);
+                background: rgba(255, 255, 255, 0.14);
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+            }
 
-.content{
-    display:flex;
-}
+            .dock-app.active::after {
+                content: "";
+                position: absolute;
+                bottom: -7px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #fff;
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            }
 
-/* Sidebar */
+            .dock-app.about-app {
+                background: linear-gradient(
+                    135deg,
+                    rgba(102, 203, 255, 0.28),
+                    rgba(192, 135, 255, 0.28)
+                );
+            }
 
-.sidebar{
-    width:200px;
-    background:#d4d4d4;
-    border-right:1px solid #aaa;
-    padding:15px;
-}
+            .app-icon {
+                width: 28px;
+                height: 28px;
+                border-radius: 8px;
+                object-fit: cover;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
 
-.sidebar h3{
-    margin-top:0;
-    font-size:14px;
-}
+            .window {
+                position: fixed;
+                width: var(--window-width);
+                height: var(--window-height);
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: var(--radius);
+                overflow: hidden;
+                background: var(--glass);
+                border: 1px solid var(--glass-border);
+                box-shadow: var(--win-shadow);
+                backdrop-filter: blur(var(--blur)) saturate(140%);
+                -webkit-backdrop-filter: blur(var(--blur)) saturate(140%);
+                display: flex;
+                flex-direction: column;
+                user-select: none;
+                animation: windowIntro 0.7s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+                transition:
+                    width 0.35s ease,
+                    height 0.35s ease,
+                    left 0.35s ease,
+                    top 0.35s ease,
+                    transform 0.35s ease,
+                    border-radius 0.35s ease,
+                    opacity 0.25s ease,
+                    box-shadow 0.3s ease;
+                z-index: 999;
+            }
 
-/* Sidebar links with icons */
+            .window::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background:
+                    linear-gradient(
+                        180deg,
+                        rgba(255, 255, 255, 0.12),
+                        rgba(255, 255, 255, 0.03)
+                    ),
+                    linear-gradient(
+                        135deg,
+                        rgba(102, 203, 255, 0.08),
+                        transparent 45%,
+                        rgba(192, 135, 255, 0.08)
+                    );
+                pointer-events: none;
+            }
 
-.sidebar a{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    text-decoration:none;
-    color:#333;
-    margin:8px 0;
-    font-size:13px;
-    transition: color 0.25s ease;
-}
+            .window.dragging {
+                transition: none !important;
+                box-shadow: 0 28px 75px rgba(0, 0, 0, 0.45);
+            }
 
-/* Hover effect */
+            .window.minimized {
+                pointer-events: none;
+            }
 
-.sidebar a:hover{
-    color:#3b7cff;
-}
+            .window.maximized {
+                border-radius: 22px;
+            }
 
-.sidebar img{
-    width:18px;
-    height:18px;
-    transition:transform 0.2s ease;
-}
+            .window.hidden {
+                display: none;
+            }
 
-.sidebar a:hover img{
-    transform:scale(1.1);
-}
+            .window.snap-animate {
+                transition:
+                    width 0.35s ease,
+                    height 0.35s ease,
+                    left 0.35s ease,
+                    top 0.35s ease,
+                    transform 0.35s ease,
+                    border-radius 0.35s ease,
+                    opacity 0.25s ease,
+                    box-shadow 0.3s ease;
+            }
 
-/* Main content */
+            @keyframes windowIntro {
+                0% {
+                    opacity: 0;
+                    transform: translate(-50%, -40%) scale(0.86);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
 
-.main{
-    flex:1;
-    padding:20px;
-    background:#f5f5f5;
-}
+            .titlebar {
+                height: 52px;
+                min-height: 52px;
+                background: var(--titlebar);
+                border-bottom: 1px solid var(--titlebar-border);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 10px 0 16px;
+                position: relative;
+                cursor: grab;
+                z-index: 3;
+            }
 
-/* Profile layout */
+            .titlebar:active {
+                cursor: grabbing;
+            }
 
-.profile{
-    display:flex;
-    gap:15px;
-}
+            .titlebar::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                height: 50%;
+                background: linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0.16),
+                    rgba(255, 255, 255, 0)
+                );
+                pointer-events: none;
+            }
 
-.profile img{
-    width:90px;
-    border-radius:6px;
-}
+            .title-left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                min-width: 0;
+            }
 
- /* BIG NAME TRICK */
+            .window-badge {
+                width: 28px;
+                height: 28px;
+                border-radius: 10px;
+                overflow: hidden;
+                flex: 0 0 auto;
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            }
 
-.name{
-    font-family:"Satisfy", cursive;
-    font-size:42px;
-    margin:0;
-    color:#66CBFF;
-}
-  
-/* online indicator */
+            .window-badge img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
 
-.online{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:14px;
-    color:#2ecc71;
-    margin-top:3px;
-    font-weight:bold;
-}
+            .title {
+                font-size: 14px;
+                font-weight: 600;
+                color: #fff;
+                letter-spacing: 0.2px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
-/* green status dot */
+            .window-controls {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
 
-.statusdot{
-    width:8px;
-    height:8px;
-    background:#2ecc71;
-    border-radius:50%;
-    box-shadow:0 0 6px #2ecc71;
-}
-  
-.abouttext{
-    font-family:"Patrick Hand", cursive;
-    font-size:18px;
-    text-align:center;
-    color:#444;
-    line-height:1.5;
-}
- 
-.footer{
-    text-align:center;
-    font-size:11px;
-    color:#333;
-    padding:8px;
-}
-  
-</style>
-</head>
+            .control-btn {
+                width: 42px;
+                height: 34px;
+                border: none;
+                border-radius: 12px;
+                background: transparent;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition:
+                    background 0.18s ease,
+                    transform 0.18s ease;
+                font-size: 15px;
+                position: relative;
+            }
 
-<body>
+            .control-btn:hover {
+                background: rgba(255, 255, 255, 0.12);
+            }
 
-<div class="desktop">
+            .control-btn:active {
+                transform: scale(0.96);
+            }
 
-<div class="window">
+            .control-btn.close:hover {
+                background: #e81123;
+            }
 
-<div class="titlebar">
-<div class="buttons">
-<div class="btn red"></div>
-<div class="btn yellow"></div>
-<div class="btn green"></div>
-</div>
-<div class="title">About Me</div>
-</div>
+            .control-btn svg {
+                width: 14px;
+                height: 14px;
+                stroke: currentColor;
+                stroke-width: 2.1;
+                fill: none;
+            }
 
-<div class="content">
+            .content {
+                display: flex;
+                flex: 1;
+                min-height: 0;
+                position: relative;
+                z-index: 2;
+            }
 
-<div class="sidebar">
+            .sidebar {
+                width: 220px;
+                background: var(--sidebar);
+                border-right: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 18px 14px;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
 
-<h3>୨୧ Friends List</h3>
+            .sidebar-title {
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1.8px;
+                color: rgba(255, 255, 255, 0.7);
+                margin: 0 0 14px 6px;
+                font-weight: 700;
+            }
 
-<a href="about.html">
-<img src="https://xatimg.com/image/EFdStRe7EuII.jpg" alt="Friend icon">
-My lover
-</a>
+            .friend-list {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
 
-<a href="projects.html">
-<img src="https://xatimg.com/image/kIYYbRaGvDEA.jpg" alt="Friend icon">
-Nanana
-</a>
+            .friend-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                text-decoration: none;
+                color: #fff;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.09);
+                padding: 10px;
+                border-radius: 16px;
+                transition:
+                    transform 0.22s ease,
+                    background 0.22s ease,
+                    box-shadow 0.22s ease,
+                    border-color 0.22s ease;
+                position: relative;
+                overflow: hidden;
+            }
 
-<a href="interests.html">
-<img src="https://xatimg.com/image/w6sg1q9hXEtb.jpg" alt="Friend icon">
-Goofball
-</a>
+            .friend-item::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    135deg,
+                    rgba(102, 203, 255, 0.1),
+                    rgba(192, 135, 255, 0.08)
+                );
+                opacity: 0;
+                transition: opacity 0.22s ease;
+            }
 
-<a href="contact.html">
-<img src="https://xatimg.com/image/qXZeId8CaLvc.gif">
-Home
-</a>
+            .friend-item:hover {
+                transform: translateX(6px) scale(1.01);
+                background: rgba(255, 255, 255, 0.09);
+                border-color: rgba(255, 255, 255, 0.16);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+            }
 
-</div>
+            .friend-item:hover::before {
+                opacity: 1;
+            }
 
-<div class="main">
-    
-<div class="profile">
-<img src="https://xatimg.com/image/HwzwD3BVZpCs.jpg" alt="Profile picture">
+            .friend-item > * {
+                position: relative;
+                z-index: 1;
+            }
 
-<div>
-<h1 class="name">Chaii</h1>
-  <div class="online">
-<div class="statusdot"></div>
-Online Now
-</div>
-<p class="abouttext" id="typing"></p>
+            .friend-avatar {
+                width: 42px;
+                height: 42px;
+                border-radius: 14px;
+                object-fit: cover;
+                border: 1px solid rgba(255, 255, 255, 0.16);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+            }
 
-</div>
-</div>
+            .friend-meta {
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+            }
 
-<p class="abouttext">
+            .friend-name {
+                font-size: 14px;
+                font-weight: 700;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
-  </p>
+            .friend-sub {
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.72);
+                margin-top: 2px;
+            }
 
-</div>
+            .main {
+                flex: 1;
+                min-width: 0;
+                background: var(--main);
+                padding: 24px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
 
-</div>
+            .hero-card {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 24px;
+                padding: 22px;
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+                position: relative;
+                overflow: hidden;
+            }
 
-<div class="footer">
-xoxo
-</div>
+            .hero-card::before {
+                content: "";
+                position: absolute;
+                width: 280px;
+                height: 280px;
+                right: -80px;
+                top: -100px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    rgba(102, 203, 255, 0.18),
+                    transparent 65%
+                );
+                pointer-events: none;
+            }
 
-</div>
+            .hero-card::after {
+                content: "";
+                position: absolute;
+                width: 240px;
+                height: 240px;
+                left: -120px;
+                bottom: -130px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    rgba(192, 135, 255, 0.16),
+                    transparent 68%
+                );
+                pointer-events: none;
+            }
 
-</div>
+            .profile {
+                display: flex;
+                gap: 18px;
+                align-items: flex-start;
+                position: relative;
+                z-index: 1;
+            }
 
-</body>
-  <script>
+            .profile-pic-wrap {
+                position: relative;
+                width: 110px;
+                height: 110px;
+                flex: 0 0 auto;
+            }
 
-const text = " leo - female - single - chicago,il";
+            .profile-pic {
+                width: 110px;
+                height: 110px;
+                object-fit: cover;
+                border-radius: 24px;
+                border: 2px solid rgba(255, 255, 255, 0.18);
+                box-shadow: 0 16px 28px rgba(0, 0, 0, 0.28);
+                animation: softFloat 4s ease-in-out infinite;
+            }
 
-let i = 0;
-const speed = 40;
+            .profile-ring {
+                position: absolute;
+                inset: -6px;
+                border-radius: 28px;
+                background: conic-gradient(
+                    from 180deg,
+                    rgba(102, 203, 255, 0.65),
+                    rgba(192, 135, 255, 0.55),
+                    rgba(255, 255, 255, 0.2),
+                    rgba(102, 203, 255, 0.65)
+                );
+                filter: blur(14px);
+                opacity: 0.55;
+                z-index: -1;
+            }
 
-function typeWriter(){
-    if(i < text.length){
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-    }
-}
+            @keyframes softFloat {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-6px);
+                }
+            }
 
-typeWriter();
+            .profile-text {
+                flex: 1;
+                min-width: 0;
+                padding-top: 4px;
+            }
 
-</script>
+            .name {
+                font-family: "Satisfy", cursive;
+                font-size: 48px;
+                margin: 0;
+                line-height: 1;
+                color: #fff;
+                text-shadow: 0 4px 16px rgba(102, 203, 255, 0.35);
+            }
+
+            .name-gradient {
+                background: linear-gradient(
+                    90deg,
+                    #143B1D ,
+                    #62CD6A,
+                    #198731,
+                    #000
+                );
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                background-size: 200% auto;
+                animation: shimmer 5s linear infinite;
+            }
+
+            @keyframes shimmer {
+                0% {
+                    background-position: 0% center;
+                }
+                100% {
+                    background-position: 200% center;
+                }
+            }
+
+            .online {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 8px;
+                padding: 8px 12px;
+                border-radius: 999px;
+                background: rgba(46, 204, 113, 0.16);
+                border: 1px solid rgba(46, 204, 113, 0.24);
+                color: #bff8cf;
+                font-size: 13px;
+                font-weight: 700;
+                box-shadow: 0 0 18px rgba(46, 204, 113, 0.1);
+            }
+
+            .statusdot {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #2ecc71;
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.8);
+                animation: pulseDot 1.8s infinite;
+            }
+
+            @keyframes pulseDot {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.75);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+                }
+            }
+
+            .typing-wrap {
+                margin-top: 16px;
+                min-height: 32px;
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            .abouttext {
+                font-family: "Patrick Hand", cursive;
+                font-size: 21px;
+                color: #ffffff;
+                line-height: 1.2;
+                margin: 0;
+                letter-spacing: 0.2px;
+                text-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                max-width: 100%;
+            }
+
+            .cursor {
+                display: inline-block;
+                width: 10px;
+                color: #9fe2ff;
+                animation: blink 1s step-end infinite;
+                font-weight: 700;
+            }
+
+            @keyframes blink {
+                50% {
+                    opacity: 0;
+                }
+            }
+
+            .bottom-grid {
+                margin-top: 18px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .stat-card {
+                border-radius: 18px;
+                padding: 14px;
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.09);
+                transition:
+                    transform 0.22s ease,
+                    background 0.22s ease;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-4px);
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .stat-label {
+                font-size: 11px;
+                letter-spacing: 1.2px;
+                text-transform: uppercase;
+                color: rgba(255, 255, 255, 0.65);
+                margin-bottom: 6px;
+                font-weight: 700;
+            }
+
+            .stat-value {
+                font-size: 15px;
+                font-weight: 700;
+                color: #fff;
+            }
+
+            .footer {
+                margin-top: 18px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                color: rgba(255, 255, 255, 0.72);
+                font-size: 12px;
+                padding: 0 3px;
+            }
+
+            .footer-pill {
+                padding: 8px 12px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.07);
+                border: 1px solid rgba(255, 255, 255, 0.09);
+            }
+
+            @media (max-width: 900px) {
+                .window {
+                    width: 92vw !important;
+                    height: 82vh !important;
+                }
+                .sidebar {
+                    width: 200px;
+                }
+            }
+
+            @media (max-width: 720px) {
+                .content {
+                    flex-direction: column;
+                }
+                .sidebar {
+                    width: 100%;
+                    border-right: none;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                }
+                .bottom-grid {
+                    grid-template-columns: 1fr;
+                }
+                .profile {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+                .profile-text {
+                    text-align: center;
+                }
+            }
+
+            ::selection {
+                background: rgba(102, 203, 255, 0.35);
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <div class="desktop">
+            <div class="window" id="aboutWindow">
+                <div class="titlebar" id="dragHandle">
+                    <div class="title-left">
+                        <div class="window-badge">
+                            <img
+                                src="https://xatimg.com/image/p3LDtmiwvDTC.png"
+                                alt="App icon"
+                            />
+                        </div>
+                        <div class="title">About Me</div>
+                    </div>
+
+                    <div class="window-controls">
+                        <button
+                            class="control-btn minimize"
+                            id="minBtn"
+                            title="Minimize"
+                            aria-label="Minimize"
+                        >
+                            <svg viewBox="0 0 24 24"><path d="M5 12h14" /></svg>
+                        </button>
+
+                        <button
+                            class="control-btn maximize"
+                            id="maxBtn"
+                            title="Maximize"
+                            aria-label="Maximize"
+                        >
+                            <svg id="maxIcon" viewBox="0 0 24 24">
+                                <rect
+                                    x="5"
+                                    y="5"
+                                    width="14"
+                                    height="14"
+                                    rx="1.5"
+                                ></rect>
+                            </svg>
+                        </button>
+
+                        <button
+                            class="control-btn close"
+                            id="closeBtn"
+                            title="Close"
+                            aria-label="Close"
+                        >
+                            <svg viewBox="0 0 24 24">
+                                <path d="M6 6l12 12M18 6L6 18" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <aside class="sidebar">
+                        <h3 class="sidebar-title"> Homie List</h3>
+
+                        <div class="friend-list">
+                            <a class="friend-item" href="https://xat.me/nicholas">
+                                <img
+                                    class="friend-avatar"
+                                    src="https://xatimg.com/image/8TdW2NLh4Opr.gif"
+                                    alt="Friend icon"
+                                />
+                                <div class="friend-meta">
+                                    <div class="friend-name">Nick</div>
+                                    <div class="friend-sub">
+                                     
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a class="friend-item" href="https://xat.me/MathiasTRW">
+                                <img
+                                    class="friend-avatar"
+                                    src="https://xatimg.com/image/8TdW2NLh4Opr.gif"
+                                    alt="Friend icon"
+                                />
+                                <div class="friend-meta">
+                                    <div class="friend-name">Mathias </div>
+                                    <div class="friend-sub"></div>
+                                </div>
+                            </a>
+
+                            <a class="friend-item" href="https://xat.me/sushi">
+                                <img
+                                    class="friend-avatar"
+                                    src="https://xatimg.com/image/8TdW2NLh4Opr.gif"
+                                    alt="Friend icon"
+                                />
+                                <div class="friend-meta">
+                                    <div class="friend-name">Sushi</div>
+                                    <div class="friend-sub">
+                                       
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a class="friend-item" href="https://xat.me/chica">
+                                <img
+                                    class="friend-avatar"
+                                    src="https://xatimg.com/image/8TdW2NLh4Opr.gif"
+                                    alt="Home icon"
+                                />
+                                <div class="friend-meta">
+                                    <div class="friend-name">Chica</div>
+                                    <div class="friend-sub"></div>
+                                </div>
+                            </a>                            
+                                <div class="friend-meta">
+                                    <div class="friend-name"></div>
+                                    <div class="friend-sub">
+                                     
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </aside>
+
+                    <main class="main">
+                        <div class="hero-card">
+                            <div class="profile">
+                                <div class="profile-pic-wrap">
+                                    <div class="profile-ring"></div>
+                                    <img
+                                        class="profile-pic"
+                                        src="https://xatimg.com/image/p3LDtmiwvDTC.png"
+                                        alt="Profile picture"
+                                    />
+                                </div>
+
+                                <div class="profile-text">
+                                    <h1 class="name">
+                                        <span class="name-gradient">Tiro</span>
+                                    </h1>
+
+                                    <div class="online">
+                                        <div class="statusdot"></div>
+                                        Online Now
+                                    </div>
+
+                                    <div class="typing-wrap">
+                                        <p class="abouttext">
+                                            <span id="typing"></span
+                                            ><span class="cursor">|</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bottom-grid">
+                                <div class="stat-card">
+                                    <div class="stat-label">Mood</div>
+                                    <div class="stat-value">Grinding</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Status</div>
+                                    <div class="stat-value">Getiing money</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Location</div>
+                                    <div class="stat-value">At the bank</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="footer">
+                            <div class="footer-pill">$$$$$$</div>
+                            <div class="footer-pill">(221192)</div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+
+            <div class="taskbar">
+                <div class="dock-items">
+                    <div
+                        class="dock-app about-app active"
+                        id="dockAbout"
+                        title="About Me"
+                    >
+                        <img
+                            class="app-icon"
+                            src="https://xatimg.com/image/p3LDtmiwvDTC.png"
+                            alt="About Me"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const win = document.getElementById("aboutWindow");
+            const dragHandle = document.getElementById("dragHandle");
+            const minBtn = document.getElementById("minBtn");
+            const maxBtn = document.getElementById("maxBtn");
+            const closeBtn = document.getElementById("closeBtn");
+            const dockAbout = document.getElementById("dockAbout");
+            const maxIcon = document.getElementById("maxIcon");
+            const typingEl = document.getElementById("typing");
+
+            const cuteQuote = "Wake me when you need me.";
+
+            let isDragging = false;
+            let isMaximized = false;
+            let isMinimized = false;
+
+            let dragOffsetX = 0;
+            let dragOffsetY = 0;
+
+            let lastNormal = {
+                left: null,
+                top: null,
+                width: 780,
+                height: 500,
+            };
+
+            function centerToViewport() {
+                win.style.left = "50vw";
+                win.style.top = "50vh";
+                win.style.transform = "translate(-50%, -50%)";
+            }
+
+            function setWindowPosition(left, top) {
+                win.style.left = left + "px";
+                win.style.top = top + "px";
+                win.style.transform = "none";
+            }
+
+            function saveNormalBounds() {
+                if (isMaximized || isMinimized) return;
+
+                const rect = win.getBoundingClientRect();
+                lastNormal = {
+                    left: rect.left,
+                    top: rect.top,
+                    width: rect.width,
+                    height: rect.height,
+                };
+            }
+
+            function updateMaximizeIcon() {
+                if (isMaximized) {
+                    maxIcon.innerHTML = `
+                    <path d="M9 5h10v10"></path>
+                    <path d="M15 9H5v10h10"></path>
+                `;
+                } else {
+                    maxIcon.innerHTML = `<rect x="5" y="5" width="14" height="14" rx="1.5"></rect>`;
+                }
+            }
+
+            function maximizeWindow() {
+                if (isMinimized) restoreWindow();
+
+                if (!isMaximized) {
+                    saveNormalBounds();
+                    isMaximized = true;
+                    win.classList.add("maximized", "snap-animate");
+                    win.style.left = "12px";
+                    win.style.top = "12px";
+                    win.style.width = window.innerWidth - 24 + "px";
+                    win.style.height = window.innerHeight - 24 + "px";
+                    win.style.transform = "none";
+                } else {
+                    isMaximized = false;
+                    win.classList.remove("maximized");
+                    win.style.width = lastNormal.width + "px";
+                    win.style.height = lastNormal.height + "px";
+                    setWindowPosition(lastNormal.left, lastNormal.top);
+                }
+
+                updateMaximizeIcon();
+                setTimeout(() => win.classList.remove("snap-animate"), 350);
+            }
+
+            function minimizeWindow() {
+                if (isMinimized) return;
+
+                isMinimized = true;
+                dockAbout.classList.remove("active");
+
+                const dockRect = dockAbout.getBoundingClientRect();
+                const rect = win.getBoundingClientRect();
+
+                const targetX =
+                    dockRect.left + dockRect.width / 2 - rect.width / 2;
+                const targetY =
+                    dockRect.top + dockRect.height / 2 - rect.height / 2;
+
+                setWindowPosition(targetX, targetY);
+                win.classList.add("minimized");
+                win.style.transition = "all .45s cubic-bezier(.2,.8,.2,1)";
+                win.style.transform = "scale(.18)";
+                win.style.opacity = "0";
+                win.style.filter = "blur(3px)";
+
+                setTimeout(() => {
+                    win.classList.add("hidden");
+                    win.style.filter = "";
+                    win.style.transition = "";
+                }, 450);
+            }
+
+            function restoreWindow() {
+                win.classList.remove("hidden");
+                dockAbout.classList.add("active");
+                isMinimized = false;
+
+                if (isMaximized) {
+                    win.style.left = "12px";
+                    win.style.top = "12px";
+                    win.style.width = window.innerWidth - 24 + "px";
+                    win.style.height = window.innerHeight - 24 + "px";
+                    win.style.transform = "none";
+                } else {
+                    win.style.width = lastNormal.width + "px";
+                    win.style.height = lastNormal.height + "px";
+                    centerToViewport();
+                }
+
+                win.style.opacity = "0";
+                win.style.transition = "all .42s cubic-bezier(.2,.9,.2,1)";
+
+                requestAnimationFrame(() => {
+                    win.classList.remove("minimized");
+                    win.style.opacity = "1";
+                    if (!isMaximized) {
+                        win.style.transform = "translate(-50%, -50%) scale(1)";
+                    } else {
+                        win.style.transform = "none";
+                    }
+                });
+
+                setTimeout(() => {
+                    win.style.transition = "";
+                }, 430);
+            }
+
+            function closeWindowToDock() {
+                minimizeWindow();
+            }
+
+            function typeCuteQuote() {
+                typingEl.textContent = "";
+                let i = 0;
+
+                function type() {
+                    if (i < cuteQuote.length) {
+                        typingEl.textContent += cuteQuote.charAt(i);
+                        i++;
+                        setTimeout(type, 34);
+                    }
+                }
+
+                type();
+            }
+
+            dragHandle.addEventListener("mousedown", (e) => {
+                const clickedButton = e.target.closest(".control-btn");
+                if (clickedButton || isMinimized) return;
+
+                const rect = win.getBoundingClientRect();
+
+                if (isMaximized) {
+                    isMaximized = false;
+                    win.classList.remove("maximized");
+                    updateMaximizeIcon();
+
+                    const restoredWidth = lastNormal.width || 780;
+                    const restoredHeight = lastNormal.height || 500;
+
+                    win.style.width = restoredWidth + "px";
+                    win.style.height = restoredHeight + "px";
+
+                    const newLeft = e.clientX - restoredWidth / 2;
+                    const newTop = e.clientY - 20;
+
+                    setWindowPosition(
+                        Math.max(
+                            0,
+                            Math.min(
+                                window.innerWidth - restoredWidth,
+                                newLeft,
+                            ),
+                        ),
+                        Math.max(
+                            0,
+                            Math.min(
+                                window.innerHeight - restoredHeight,
+                                newTop,
+                            ),
+                        ),
+                    );
+                } else {
+                    if (win.style.transform.includes("translate")) {
+                        setWindowPosition(rect.left, rect.top);
+                    }
+                }
+
+                isDragging = true;
+                win.classList.add("dragging");
+
+                const currentRect = win.getBoundingClientRect();
+                dragOffsetX = e.clientX - currentRect.left;
+                dragOffsetY = e.clientY - currentRect.top;
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (!isDragging || isMinimized) return;
+
+                let left = e.clientX - dragOffsetX;
+                let top = e.clientY - dragOffsetY;
+
+                left = Math.max(
+                    0,
+                    Math.min(left, window.innerWidth - win.offsetWidth),
+                );
+                top = Math.max(
+                    0,
+                    Math.min(top, window.innerHeight - win.offsetHeight),
+                );
+
+                setWindowPosition(left, top);
+            });
+
+            document.addEventListener("mouseup", () => {
+                if (!isDragging) return;
+                isDragging = false;
+                win.classList.remove("dragging");
+                saveNormalBounds();
+            });
+
+            dragHandle.addEventListener("dblclick", (e) => {
+                if (e.target.closest(".control-btn")) return;
+                maximizeWindow();
+            });
+
+            minBtn.addEventListener("click", minimizeWindow);
+            maxBtn.addEventListener("click", maximizeWindow);
+            closeBtn.addEventListener("click", closeWindowToDock);
+
+            dockAbout.addEventListener("click", () => {
+                if (isMinimized || win.classList.contains("hidden")) {
+                    restoreWindow();
+                }
+            });
+
+            window.addEventListener("resize", () => {
+                if (isMaximized) {
+                    win.style.left = "12px";
+                    win.style.top = "12px";
+                    win.style.width = window.innerWidth - 24 + "px";
+                    win.style.height = window.innerHeight - 24 + "px";
+                    win.style.transform = "none";
+                } else if (!isMinimized) {
+                    centerToViewport();
+                }
+            });
+
+            window.addEventListener("load", () => {
+                win.style.width = "780px";
+                win.style.height = "500px";
+                centerToViewport();
+                typeCuteQuote();
+            });
+        </script>
+    </body>
 </html>
+About Me.html
+47 KB
